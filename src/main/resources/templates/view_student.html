@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>View Student</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+  Welcome to Magadh University
+</header>
+<main>
+  <h1>View Student</h1>
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <td th:text="${student.studentId}"></td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td th:text="${student.name}"></td>
+    </tr>
+    <tr>
+      <th>Department</th>
+      <td th:text="${student.department}"></td>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <td th:text="${student.year}"></td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td th:text="${student.email}"></td>
+    </tr>
+  </table>
+
+<!--   Video Player-->
+<!--  <div class="video-container">-->
+<!--    <video width="640" height="360" controls>-->
+<!--      <source src="/videos/videoplayback.mp4" type="video/mp4">-->
+<!--      Your browser does not support the video tag.-->
+<!--    </video>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Not working-->
+
+
+  <video width="640" height="360" controls>
+    <source th:src="@{'/videos/' + ${videoFile}}" type="video/mp4">
+    <source th:src="@{'/videos/' + ${videoFile}}" type="video/ogg">
+    Your browser does not support the video tag.
+  </video>
+  <div>
+    <p th:text="'Video URL: /videos/' + ${videoFile}"></p>
+  </div>
+
+
+
+  <!-- Edit Button -->
+  <a th:href="@{/students/update/{studentId}(studentId=${student.studentId})}" class="btn btn-primary">Edit</a>
+</main>
+</body>
+</html>

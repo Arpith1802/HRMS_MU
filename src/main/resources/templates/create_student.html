@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Register Student</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* General page styles */
+    body {
+      background-color: #f4f4f9;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #343a40;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Subheading styles */
+    .sub-heading {
+      text-align: center;
+      font-size: 1.5em;
+      color: #6c757d;
+      margin: 20px 0;
+    }
+
+    /* Form styles */
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .invalid {
+      border: 2px solid red;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+
+    .btn[disabled] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* Button styles */
+    .btn-success {
+      background-color: #28a745;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+<header>
+  Welcome to Magadh University
+</header>
+<main>
+  <div class="sub-heading">Register Student</div>
+  <form action="/students" method="post" id="studentForm" novalidate>
+    <form action="/students" method="post" enctype="multipart/form-data">
+
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              placeholder="Enter full name"
+              oninput="validateForm()"
+              required>
+      <small id="nameError" class="error-message"></small>
+    </div>
+
+    <!-- Department Dropdown -->
+    <div class="form-group">
+      <label for="department">Department</label>
+      <select id="department" name="department" class="form-control" oninput="validateForm()" required>
+        <option value="" disabled selected>Select Department</option>
+        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Chemical Engineering">Chemical Engineering</option>
+        <option value="Biotechnology Engineering">Biotechnology Engineering</option>
+        <option value="Aerospace Engineering">Aerospace Engineering</option>
+        <option value="Automobile Engineering">Automobile Engineering</option>
+        <option value="MBA">MBA</option>
+        <option value="MCA">MCA</option>
+      </select>
+      <small id="departmentError" class="error-message"></small>
+    </div>
+
+    <!-- Year Field -->
+    <div class="form-group">
+      <label for="year">Year</label>
+      <input
+              type="text"
+              id="year"
+              name="year"
+              class="form-control"
+              placeholder="Enter year (e.g., 1, 2, 3, 4)"
+              oninput="validateForm()"
+              required>
+      <small id="yearError" class="error-message"></small>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="Enter valid email"
+              oninput="validateForm()"
+              required>
+      <small id="emailError" class="error-message"></small>
+    </div>
+    <div>
+      label for="video">Select a video:</label>
+      <input type="file" id="video" name="video" accept="video/*" required>
+
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success" id="submitButton" disabled>Submit</button>
+  </form>
+</main>
+
+<script>
+  function validateForm() {
+    const nameField = document.getElementById('name');
+    const departmentField = document.getElementById('department');
+    const yearField = document.getElementById('year');
+    const emailField = document.getElementById('email');
+    const submitButton = document.getElementById('submitButton');
+
+    let isValid = true;
+
+    // Validate Name
+    const nameError = document.getElementById('nameError');
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    if (nameField.value.trim() === "") {
+      nameField.classList.add('invalid');
+      nameError.textContent = "Name cannot be empty.";
+      isValid = false;
+    } else if (!nameRegex.test(nameField.value.trim())) {
+      nameField.classList.add('invalid');
+      nameError.textContent = "Name must contain only alphabets.";
+      isValid = false;
+    } else {
+      nameField.classList.remove('invalid');
+      nameError.textContent = "";
+    }
+
+    // Validate Department
+    const departmentError = document.getElementById('departmentError');
+    if (!departmentField.value) {
+      departmentField.classList.add('invalid');
+      departmentError.textContent = "Please select a department.";
+      isValid = false;
+    } else {
+      departmentField.classList.remove('invalid');
+      departmentError.textContent = "";
+    }
+
+    // Validate Year
+    const yearError = document.getElementById('yearError');
+    const yearRegex = /^[1-4]$/;
+    if (!yearRegex.test(yearField.value.trim())) {
+      yearField.classList.add('invalid');
+      yearError.textContent = "Year must be a number between 1 and 4.";
+      isValid = false;
+    } else {
+      yearField.classList.remove('invalid');
+      yearError.textContent = "";
+    }
+
+    // Validate Email
+    const emailError = document.getElementById('emailError');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailField.value.trim())) {
+      emailField.classList.add('invalid');
+      emailError.textContent = "Please enter a valid email address.";
+      isValid = false;
+    } else {
+      emailField.classList.remove('invalid');
+      emailError.textContent = "";
+    }
+
+    // Enable or Disable Submit Button
+    submitButton.disabled = !isValid;
+  }
+</script>
+</body>
+</html>
